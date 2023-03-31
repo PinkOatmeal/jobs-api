@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "jobs-api"
+version = "0.1.0"
+description = ""
+authors = ["Ilya Zhalnin <mr.ilay333@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "jobs_api" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.0"
+sqlalchemy = "^2.0.7"
+alembic = "^1.10.2"
+psycopg2-binary = "^2.9.5"
+
+
+[tool.poetry.group.dev.dependencies]
+uvicorn = { extras = ["standard"], version = "^0.21.1" }
+black = "^23.1.0"
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+include = '\.pyi?$'
+extend-exclude = """
+/(
+  # The following are specific to Black, you probably don"t want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+"""
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
