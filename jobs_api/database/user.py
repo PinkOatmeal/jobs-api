@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, relationship
 
 from jobs_api.common.database.base import BaseModel
 from jobs_api.common.types import int_pk, role
@@ -12,3 +12,5 @@ class UserModel(BaseModel):
     surname: Mapped[str]
     password: Mapped[str]
     role: Mapped[role]
+
+    vacancies = relationship("Vacancy", back_populates="employer")
