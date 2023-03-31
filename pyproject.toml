@@ -17,6 +17,7 @@ psycopg2-binary = "^2.9.5"
 [tool.poetry.group.dev.dependencies]
 uvicorn = { extras = ["standard"], version = "^0.21.1" }
 black = "^23.1.0"
+requests = "^2.28.2"
 
 [tool.black]
 line-length = 120
