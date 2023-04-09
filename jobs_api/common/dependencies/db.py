@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from jobs_api.common.database import SessionLocal
+from jobs_api.common.database.base import SessionLocal
 
 
 def get_db() -> Session:
@@ -9,4 +9,5 @@ def get_db() -> Session:
         try:
             yield db
         finally:
+            db.commit()
             db.close()
