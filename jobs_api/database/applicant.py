@@ -14,6 +14,4 @@ class ApplicantModel(UserModel):
     education: Mapped[Education] = mapped_column(Enum(Education, name="education"))
     skills: Mapped[str_array]
 
-    __mapper_args__ = {
-        "polymorphic_identity": Role.applicant
-    }
+    __mapper_args__ = {"polymorphic_identity": Role.applicant}

@@ -13,7 +13,4 @@ class UserModel(BaseModel):
     password: Mapped[str]
     role: Mapped[role]
 
-    __mapper_args__ = {
-        "polymorphic_identity": "user",
-        "polymorphic_on": "role"
-    }
+    __mapper_args__ = {"polymorphic_identity": "user", "polymorphic_on": "role"}

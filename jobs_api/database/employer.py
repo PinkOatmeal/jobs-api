@@ -12,6 +12,4 @@ class EmployerModel(UserModel):
 
     vacancies = relationship("Vacancy", back_populates="employer")
 
-    __mapper_args__ = {
-        "polymorphic_identity": Role.employer
-    }
+    __mapper_args__ = {"polymorphic_identity": Role.employer}
