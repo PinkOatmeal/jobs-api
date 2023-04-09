@@ -1,8 +1,8 @@
 """init
 
-Revision ID: a26b200b74f5
+Revision ID: 3713c4544b19
 Revises: 
-Create Date: 2023-04-01 02:33:46.483869
+Create Date: 2023-04-09 19:02:51.953586
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 from jobs_api.database.geo import download_geo
 
 # revision identifiers, used by Alembic.
-revision = "a26b200b74f5"
+revision = "3713c4544b19"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,17 +28,42 @@ def upgrade() -> None:
     )
     geo_rows = download_geo()
     op.bulk_insert(geo_table, geo_rows)
-
     op.create_table(
         "users",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("name", sa.String(), nullable=False),
-        sa.Column("surname", sa.String(), nullable=False),
+        sa.Column("email", sa.String(), nullable=False),
         sa.Column("password", sa.String(), nullable=False),
         sa.Column("role", sa.Enum("applicant", "employer", name="role"), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
-
+    op.create_table(
+        "applicants",
+        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("surname", sa.String(), nullable=False),
+        sa.Column("experience", sa.Integer(), nullable=False),
+        sa.Column(
+            "education",
+            sa.Enum("basic", "secondary_general", "secondary_vocational", "high", name="education"),
+            nullable=False,
+        ),
+        sa.Column("skills", sa.ARRAY(sa.String()), server_default="{}", nullable=False),
+        sa.ForeignKeyConstraint(
+            ["id"],
+            ["users.id"],
+        ),
+        sa.PrimaryKeyConstraint("id"),
+    )
+    op.create_table(
+        "employers",
+        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("rating", sa.Integer(), nullable=True),
+        sa.ForeignKeyConstraint(
+            ["id"],
+            ["users.id"],
+        ),
+        sa.PrimaryKeyConstraint("id"),
+    )
     op.create_table(
         "vacancies",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -48,7 +73,7 @@ def upgrade() -> None:
         sa.Column("experience", sa.Integer(), nullable=False),
         sa.Column("employer_id", sa.Integer(), nullable=False),
         sa.Column("geo_id", sa.Integer(), nullable=False),
-        sa.ForeignKeyConstraint(["employer_id"], ["users.id"], name="vacancy_author_fk"),
+        sa.ForeignKeyConstraint(["employer_id"], ["employers.id"], name="vacancy_author_fk"),
         sa.ForeignKeyConstraint(["geo_id"], ["geo.id"], name="vacancy_geo_fk"),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -62,6 +87,8 @@ def downgrade() -> None:
     op.drop_index(op.f("ix_vacancies_geo_id"), table_name="vacancies")
     op.drop_index(op.f("ix_vacancies_employer_id"), table_name="vacancies")
     op.drop_table("vacancies")
+    op.drop_table("employers")
+    op.drop_table("applicants")
     op.drop_table("users")
     op.drop_table("geo")
     # ### end Alembic commands ###
