@@ -9,8 +9,11 @@ class UserModel(BaseModel):
 
     id: Mapped[int_pk]
     name: Mapped[str]
-    surname: Mapped[str]
+    email: Mapped[str]
     password: Mapped[str]
     role: Mapped[role]
 
-    vacancies = relationship("Vacancy", back_populates="employer")
+    __mapper_args__ = {
+        "polymorphic_identity": "user",
+        "polymorphic_on": "role"
+    }
