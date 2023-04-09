@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from jobs_api.api.jobs.views import router as jobs_router
+from jobs_api.api.applicants.views import router as applicants_router
 from jobs_api.settings import settings
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(jobs_router, prefix="/api")
+app.include_router(applicants_router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
