@@ -14,8 +14,8 @@ class Vacancy(BaseModel):
     salary: Mapped[int]
     experience: Mapped[int]
 
-    employer_id: Mapped[int] = mapped_column(ForeignKey("users.id", name="vacancy_author_fk"), index=True)
-    employer = relationship("UserModel", back_populates="vacancies")
+    employer_id: Mapped[int] = mapped_column(ForeignKey("employers.id", name="vacancy_author_fk"), index=True)
+    employer = relationship("EmployerModel", back_populates="vacancies")
 
     geo_id: Mapped[int] = mapped_column(ForeignKey("geo.id", name="vacancy_geo_fk"), index=True)
-    geo = relationship("GEOModel", back_populates="vacancies")
+    geo = relationship("GeoModel")
