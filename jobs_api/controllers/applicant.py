@@ -15,7 +15,7 @@ class ApplicantController(BaseController[ApplicantModel]):
             name=form.name,
             email=form.email,
             password=bcrypt.hashpw(form.password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8"),
-            role=form.role,
+            role=Role.applicant,
             surname=form.surname,
             experience=form.experience,
             education=form.education,
