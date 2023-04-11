@@ -2,6 +2,7 @@ from fastapi import APIRouter, Body, Depends, HTTPException, status
 
 from jobs_api.api.applicants.forms import ApplicantSignUpForm
 from jobs_api.api.applicants.schemas import SignInResponse, SignUpResponse
+from jobs_api.api.user.dto import UserDTO
 from jobs_api.common.dependencies.security import authenticate
 from jobs_api.controllers.applicant import ApplicantController
 
@@ -16,5 +17,5 @@ def sign_up(form: ApplicantSignUpForm = Body(...), controller: ApplicantControll
 
 
 @router.post("/sign_in")
-def sign_in(user_id: int = Depends(authenticate)):
-    return SignInResponse(id=user_id)
+def sign_in(user: UserDTO = Depends(authenticate)):
+    return SignInResponse(**user.dict())
