@@ -21,4 +21,4 @@ app.include_router(users_router, prefix="/api")
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("jobs_api:app", host="localhost", port=8000, reload=False)
+    uvicorn.run("jobs_api:app", host="localhost", port=8000, reload=True)

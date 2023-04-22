@@ -22,7 +22,7 @@ class BaseController(Generic[T], metaclass=ABCMeta):
     def create(self, form: BaseForm) -> T:
         raise NotImplemented
 
-    def get(self, _id: int) -> T:
+    def get(self, _id: int) -> T | None:
         stmt = select(self.model).where(self.model.id == _id)
         return self.session.scalar(stmt)
 

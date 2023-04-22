@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 
-from jobs_api.api.employers.schemas import SignInResponse, SignUpResponse
 from jobs_api.api.employers.forms import EmployerSignUpForm
-from jobs_api.common.dependencies.security import authenticate
+from jobs_api.api.employers.schemas import SignUpResponse
 from jobs_api.controllers.employer import EmployerController
 
 router = APIRouter(prefix="/employer", tags=["Employers"])
