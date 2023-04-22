@@ -5,7 +5,7 @@ from jobs_api.common.database.base import BaseModel
 from jobs_api.common.types import int_pk
 
 
-class Vacancy(BaseModel):
+class VacancyModel(BaseModel):
     __tablename__ = "vacancies"
 
     id: Mapped[int_pk]

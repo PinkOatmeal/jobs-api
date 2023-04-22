@@ -10,6 +10,6 @@ class EmployerModel(UserModel):
     id: Mapped[int] = mapped_column(ForeignKey(f"{UserModel.__tablename__}.id"), primary_key=True)
     rating: Mapped[int | None]
 
-    vacancies = relationship("Vacancy", back_populates="employer")
+    vacancies = relationship("VacancyModel", back_populates="employer")
 
     __mapper_args__ = {"polymorphic_identity": Role.employer}
