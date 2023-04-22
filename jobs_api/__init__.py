@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from jobs_api.api.applicants.views import router as applicants_router
+from jobs_api.api.employers.views import router as employers_router
 from jobs_api.api.users.views import router as users_router
 from jobs_api.settings import settings
 
@@ -16,6 +17,7 @@ app.add_middleware(
 )
 
 app.include_router(applicants_router, prefix="/api")
+app.include_router(employers_router, prefix="/api")
 app.include_router(users_router, prefix="/api")
 
 if __name__ == "__main__":
