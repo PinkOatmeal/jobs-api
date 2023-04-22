@@ -13,8 +13,3 @@ def sign_up(form: EmployerSignUpForm = Body(...), controller: EmployerController
     if controller.get_by_email(form.email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this email already exists")
     return controller.create(form)
-
-
-@router.post("/sign_in")
-def sign_in(user_id: int = Depends(authenticate)):
-    return SignInResponse(id=user_id)

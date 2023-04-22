@@ -14,8 +14,3 @@ def sign_up(form: ApplicantSignUpForm = Body(...), controller: ApplicantControll
     if controller.get_by_email(form.email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this email already exists")
     return controller.create(form)
-
-
-@router.post("/sign_in")
-def sign_in(user: UserDTO = Depends(authenticate)):
-    return SignInResponse(**user.dict())

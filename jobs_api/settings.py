@@ -15,6 +15,9 @@ class _Settings(BaseSettings):
     POSTGRES_HOST: str
     POSTGRES_PORT: int
 
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+
     @property
     def SQLALCHEMY_DB_URI(self) -> str:
         return (
@@ -30,6 +33,3 @@ class _Settings(BaseSettings):
 
 
 settings = _Settings()
-
-if __name__ == "__main__":
-    print(settings.SQLALCHEMY_DB_URI)
