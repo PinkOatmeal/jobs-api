@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from starlette import status
 
-from jobs_api.api.users.dto import UserDTO
+from jobs_api.dto import UserDTO
 from jobs_api.common.enums import Role
 from jobs_api.controllers.user import UserController
 from jobs_api.settings import settings

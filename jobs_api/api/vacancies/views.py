@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import conlist
 from starlette import status
 
-from jobs_api.api.users.dto import UserDTO
+from jobs_api.dto import UserDTO
 from jobs_api.api.vacancies.forms import CreateVacancyForm
 from jobs_api.api.vacancies.schemas import VacanciesResponse, VacancyResponse
 from jobs_api.common.dependencies.security import ALL, Authorize, EMPLOYERS

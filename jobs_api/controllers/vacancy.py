@@ -3,7 +3,7 @@ from typing import cast
 from pydantic import BaseModel as BaseForm
 from sqlalchemy import select
 
-from jobs_api.api.users.dto import UserDTO
+from jobs_api.dto import UserDTO
 from jobs_api.api.vacancies.forms import CreateVacancyForm
 from jobs_api.common.controllers import BaseController
 from jobs_api.database import VacancyModel
