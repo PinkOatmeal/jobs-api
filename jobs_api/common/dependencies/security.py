@@ -12,11 +12,7 @@ from jobs_api.controllers.user import UserController
 from jobs_api.settings import settings
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="/api/user/sign_in",
-    scopes={
-        "applicant": Role.applicant,
-        "employer": Role.employer
-    }
+    tokenUrl="/api/user/sign_in", scopes={"applicant": Role.applicant, "employer": Role.employer}
 )
 
 APPLICANTS = [Role.applicant]
