@@ -4,7 +4,7 @@ from jobs_api.api.employers.forms import EmployerSignUpForm
 from jobs_api.api.employers.schemas import SignUpResponse
 from jobs_api.controllers.employer import EmployerController
 
-router = APIRouter(prefix="/employer", tags=["Employers"])
+router = APIRouter(prefix="/employers", tags=["Employers"])
 
 
 @router.post("/sign_up", response_model=SignUpResponse, status_code=status.HTTP_201_CREATED)

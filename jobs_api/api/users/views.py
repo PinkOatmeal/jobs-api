@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from jobs_api.api.users.schemas import TokenResponse
 from jobs_api.common.dependencies.security import authenticate
 
-router = APIRouter(prefix="/user", tags=["Users"])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.post("/sign_in", response_model=TokenResponse)
