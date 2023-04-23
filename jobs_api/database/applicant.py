@@ -1,5 +1,5 @@
 from sqlalchemy import Enum, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from jobs_api.common.enums import Education, Role
 from jobs_api.common.types import str_array
@@ -13,5 +13,7 @@ class ApplicantModel(UserModel):
     experience: Mapped[int]
     education: Mapped[Education] = mapped_column(Enum(Education, name="education"))
     skills: Mapped[str_array]
+
+    favorite_vacancies = relationship("FavoriteVacancyModel")
 
     __mapper_args__ = {"polymorphic_identity": Role.applicant}
