@@ -8,7 +8,6 @@ from jobs_api.database import UserModel
 class EmployerModel(UserModel):
     __tablename__ = "employers"
     id: Mapped[int] = mapped_column(ForeignKey(f"{UserModel.__tablename__}.id"), primary_key=True)
-    rating: Mapped[int | None]
 
     vacancies = relationship("VacancyModel", back_populates="employer")
 
