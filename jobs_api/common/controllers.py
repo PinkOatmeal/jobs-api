@@ -19,7 +19,7 @@ class BaseController(Generic[T], metaclass=ABCMeta):
         self.session = session
 
     @abstractmethod
-    def create(self, form: BaseForm) -> T:
+    def create(self, *args, **kwargs) -> T:
         raise NotImplemented
 
     def get(self, _id: int) -> T | None:
@@ -33,3 +33,7 @@ class BaseController(Generic[T], metaclass=ABCMeta):
     def delete(self, _id: int):
         stmt = delete(self.model).where(self.model.id == _id)
         self.session.execute(stmt)
+
+    def exists(self, _id: int) -> bool:
+        stmt = select(1).where(self.model.id == _id)
+        return self.session.scalar(stmt) is not None

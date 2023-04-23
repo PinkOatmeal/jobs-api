@@ -10,3 +10,13 @@ class SignUpResponse(BaseResponseSchema):
 class SignInResponse(BaseResponseSchema):
     id: int
     role: Role = Role.employer
+
+
+class EmployerReviewResponse(BaseResponseSchema):
+    id: int
+    text: str
+    rating: int
+
+
+class EmployerReviewsResponse(BaseResponseSchema):
+    reviews: list[EmployerReviewResponse]
