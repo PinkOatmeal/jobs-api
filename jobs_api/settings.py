@@ -15,6 +15,10 @@ class _Settings(BaseSettings):
     POSTGRES_HOST: str
     POSTGRES_PORT: int
 
+    MINIO_ACCESS_KEY: str
+    MINIO_SECRET_KEY: str
+    MINIO_BUCKET: str = "jobs"
+
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
 
