@@ -17,6 +17,18 @@ def sign_up(form: ApplicantSignUpForm = Body(...), controller: ApplicantControll
     return controller.create(form)
 
 
+@router.get("/me", response_model=ApplicantResponse)
+def get_self_data(controller: ApplicantController = Depends(), user: UserDTO = Depends(Authorize(APPLICANTS))):
+    return controller.get(user.id)
+
+
+@router.get("/{applicant_id}", response_model=ApplicantResponse)
+def get_applicant(
+    applicant_id: int, controller: ApplicantController = Depends(), user: UserDTO = Depends(Authorize(ALL))
+):
+    return controller.get(applicant_id)
+
+
 @router.post("/avatar", status_code=status.HTTP_201_CREATED, response_model=ApplicantResponse)
 def upload_avatar(
     avatar: UploadFile,

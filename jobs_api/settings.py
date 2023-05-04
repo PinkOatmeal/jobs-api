@@ -32,6 +32,10 @@ class _Settings(BaseSettings):
             f"/{self.POSTGRES_DB}"
         )
 
+    @property
+    def MEDIA_URL(self) -> str:
+        return f"http://{self.MINIO_HOST}"
+
     class Config:
         env_file = BASE_DIR / ".env"
         case_sensitive = True
