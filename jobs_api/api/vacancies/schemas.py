@@ -8,6 +8,7 @@ class VacancyResponse(BaseResponseSchema):
     salary: int
     experience: int
     geo_id: int
+    employer_id: int
 
 
 class VacanciesResponse(BaseResponseSchema):
