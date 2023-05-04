@@ -27,11 +27,11 @@ app.include_router(users_router, prefix="/api")
 
 @app.on_event("startup")
 def startup_event():
-    minio_client = minio_client = Minio(
-        "127.0.0.1:9000",
+    minio_client = Minio(
+        settings.MINIO_HOST,
         secret_key=settings.MINIO_SECRET_KEY,
         access_key=settings.MINIO_ACCESS_KEY,
-        secure=False
+        secure=False,
     )
     if not minio_client.bucket_exists(settings.MINIO_BUCKET):
         minio_client.make_bucket(settings.MINIO_BUCKET)

@@ -15,6 +15,7 @@ class _Settings(BaseSettings):
     POSTGRES_HOST: str
     POSTGRES_PORT: int
 
+    MINIO_HOST: str = "127.0.0.1:9000"
     MINIO_ACCESS_KEY: str
     MINIO_SECRET_KEY: str
     MINIO_BUCKET: str = "jobs"
