@@ -1,3 +1,5 @@
+import json
+
 from fastapi import FastAPI
 from minio import Minio
 from starlette.middleware.cors import CORSMiddleware
@@ -35,6 +37,18 @@ def startup_event():
     )
     if not minio_client.bucket_exists(settings.MINIO_BUCKET):
         minio_client.make_bucket(settings.MINIO_BUCKET)
+        policy = {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {"AWS": ["*"]},
+                    "Action": ["s3:GetObject"],
+                    "Resource": ["arn:aws:s3:::jobs/*"],
+                },
+            ],
+        }
+        minio_client.set_bucket_policy(settings.MINIO_BUCKET, json.dumps(policy))
 
 
 if __name__ == "__main__":
