@@ -13,6 +13,7 @@ class ApplicantModel(UserModel):
     experience: Mapped[int]
     education: Mapped[Education] = mapped_column(Enum(Education, name="education"))
     skills: Mapped[str_array]
+    avatar: Mapped[str | None]
 
     favorite_vacancies = relationship("FavoriteVacancyModel")
 
