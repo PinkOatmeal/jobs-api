@@ -40,3 +40,11 @@ class ApplicantController(BaseController[ApplicantModel]):
 
     def update(self, _id: int, form: BaseForm):
         raise NotImplemented
+
+    def set_avatar(self, _id: int, avatar: str) -> ApplicantModel:
+        model = self.get(_id)
+        model.avatar = avatar
+        self.session.add(model)
+        self.session.flush()
+        self.session.refresh(model)
+        return model
