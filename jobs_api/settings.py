@@ -19,6 +19,7 @@ class _Settings(BaseSettings):
     MINIO_ACCESS_KEY: str
     MINIO_SECRET_KEY: str
     MINIO_BUCKET: str = "jobs"
+    MEDIA_URL: str
 
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
@@ -31,10 +32,6 @@ class _Settings(BaseSettings):
             f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}"
             f"/{self.POSTGRES_DB}"
         )
-
-    @property
-    def MEDIA_URL(self) -> str:
-        return f"http://{self.MINIO_HOST}"
 
     class Config:
         env_file = BASE_DIR / ".env"
