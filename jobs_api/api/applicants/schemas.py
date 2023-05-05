@@ -23,8 +23,8 @@ class ApplicantResponse(BaseResponseSchema):
     experience: int
     education: Education
     skills: list[str]
-    avatar: str
+    avatar: str | None
 
     @validator("avatar")
-    def path_to_url(cls, v: str) -> str:
-        return f"{settings.MEDIA_URL}/{settings.MINIO_BUCKET}/{v}"
+    def path_to_url(cls, v: str | None) -> str | None:
+        return f"{settings.MEDIA_URL}/{settings.MINIO_BUCKET}/{v}" if v else None
