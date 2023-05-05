@@ -1,8 +1,13 @@
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 
 from jobs_api.api.employers.forms import EmployerReviewForm, EmployerSignUpForm
-from jobs_api.api.employers.schemas import EmployerReviewResponse, EmployerReviewsResponse, SignUpResponse
-from jobs_api.common.dependencies.security import APPLICANTS, Authorize
+from jobs_api.api.employers.schemas import (
+    EmployerResponse,
+    EmployerReviewResponse,
+    EmployerReviewsResponse,
+    SignUpResponse,
+)
+from jobs_api.common.dependencies.security import ALL, APPLICANTS, Authorize
 from jobs_api.controllers.employer import EmployerController
 from jobs_api.controllers.review import ReviewController
 from jobs_api.dto import UserDTO
@@ -15,6 +20,17 @@ def sign_up(form: EmployerSignUpForm = Body(...), controller: EmployerController
     if controller.get_by_email(form.email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this email already exists")
     return controller.create(form)
+
+
+@router.get("/{employer_id}", response_model=EmployerResponse)
+def get_employer(
+    employer_id: int,
+    employer_controller: EmployerController = Depends(),
+    user: UserDTO = Depends(Authorize(ALL)),
+):
+    if not employer_controller.exists(employer_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Employer with id {employer_id} not found")
+    return employer_controller.get_with_rating(employer_id)
 
 
 @router.post("/reviews/{employer_id}", response_model=EmployerReviewResponse)

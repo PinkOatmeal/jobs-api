@@ -1,6 +1,8 @@
 import bcrypt
 from fastapi import Depends
 from pydantic import BaseModel as BaseForm
+from sqlalchemy import select
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from jobs_api.api.employers.forms import EmployerSignUpForm
@@ -8,7 +10,8 @@ from jobs_api.common.controllers import BaseController
 from jobs_api.common.dependencies.db import get_db
 from jobs_api.common.enums import Role
 from jobs_api.controllers.user import UserController
-from jobs_api.database import EmployerModel, UserModel
+from jobs_api.database import EmployerModel, ReviewModel, UserModel
+from jobs_api.dto import EmployerDTO
 
 
 class EmployerController(BaseController[EmployerModel]):
@@ -17,6 +20,21 @@ class EmployerController(BaseController[EmployerModel]):
     def __init__(self, session: Session = Depends(get_db), user_controller: UserController = Depends()):
         super().__init__(session)
         self._user_controller = user_controller
+
+    def get_with_rating(self, _id: int) -> EmployerDTO:
+        stmt = (
+            select(
+                self.model.id,
+                self.model.name,
+                self.model.role,
+                self.model.email,
+                func.avg(ReviewModel.rating).label("rating"),
+            )
+            .join(ReviewModel)
+            .where(self.model.id == _id)
+            .group_by(self.model.id, UserModel.id)
+        )
+        return EmployerDTO(**self.session.execute(stmt).mappings().first())
 
     def create(self, form: EmployerSignUpForm) -> EmployerModel:
         model = self.model(

@@ -6,3 +6,4 @@ class UserDTO(BaseDTO):
     id: int
     role: Role
     email: str
+    name: str

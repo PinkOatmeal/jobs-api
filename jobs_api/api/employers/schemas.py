@@ -1,3 +1,5 @@
+from pydantic import validator
+
 from jobs_api.common.enums import Role
 from jobs_api.common.schemas import BaseResponseSchema
 
@@ -20,3 +22,14 @@ class EmployerReviewResponse(BaseResponseSchema):
 
 class EmployerReviewsResponse(BaseResponseSchema):
     reviews: list[EmployerReviewResponse]
+
+
+class EmployerResponse(BaseResponseSchema):
+    id: int
+    name: str
+    email: str
+    rating: float
+
+    @validator("rating")
+    def round_rating(cls, v: float) -> float:
+        return round(v, 1)
